@@ -1,0 +1,6 @@
+<ul>
+  <app-todos-item *ngFor="let todo of todos" [todo]="todo" (deleteTodo)="handleDeleteTodo()" (restoreTodo)="handleRestoreTodo()"></app-todos-item>
+</ul>
+Nombre de taches : {{ activeTodoCount }}
+<a href="#" (click)="handleRestoreAll()">Restore All</a> - 
+<a href="#" (click)="handleDeleteAll()">Delete All</a>

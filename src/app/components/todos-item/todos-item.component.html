@@ -1,0 +1,5 @@
+<li [ngClass]="{ deleted: todo.deleted }">
+  {{ todo.title }} 
+  <a href="#" (click)="handleDeleteTodo()" *ngIf="!todo.deleted">Delete</a>
+  <a href="#" (click)="handleDeleteTodo()" *ngIf="todo.deleted">Restore</a>
+</li>
