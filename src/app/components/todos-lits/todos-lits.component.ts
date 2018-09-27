@@ -33,6 +33,14 @@ export class TodosLitsComponent implements OnInit {
       this.todos[index] = todo;
     })
   }
+
+  handleUpdateTodo(todo: Todo) {
+    this.todoService.updateTodo(todo).subscribe(todo => {
+      const index = this.todos.findIndex(t => t.id === todo.id);
+      this.todos[index] = todo;
+    })
+  }
+
   handleRestoreTodo(todo: Todo) {
     todo.completed = !todo.completed
     this.todoService.updateTodo(todo).subscribe(todo => {
