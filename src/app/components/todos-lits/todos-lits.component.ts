@@ -26,12 +26,9 @@ export class TodosLitsComponent implements OnInit {
     this.todoService.initialCount.subscribe(count => this.activeTodoCount = count)
   }
 
-  handleDeleteTodo(todo: Todo) {
+  handleToggleCompletedTodo(todo: Todo) {
     todo.completed = !todo.completed
-    this.todoService.updateTodo(todo).subscribe(todo => {
-      const index = this.todos.findIndex(t => t.id === todo.id);
-      this.todos[index] = todo;
-    })
+    this.handleUpdateTodo(todo)
   }
 
   handleUpdateTodo(todo: Todo) {
@@ -41,31 +38,15 @@ export class TodosLitsComponent implements OnInit {
     })
   }
 
-  handleRestoreTodo(todo: Todo) {
-    todo.completed = !todo.completed
-    this.todoService.updateTodo(todo).subscribe(todo => {
-      const index = this.todos.findIndex(t => t.id === todo.id)
-      this.todos[index] = todo;
-    })
-  }
-
   handleRestoreAll() {
     this.todos.filter(todo => todo.completed).forEach(todo => {
-      todo.completed = false
-      this.todoService.updateTodo(todo).subscribe(todo => {
-        const index = this.todos.findIndex(t => t.id === todo.id)
-        this.todos[index] = todo;
-      })
+      this.handleToggleCompletedTodo(todo)
     })
   }
 
   handleDeleteAll() {
     this.todos.filter(todo => ! todo.completed).forEach(todo => {
-      todo.completed = true
-      this.todoService.updateTodo(todo).subscribe(todo => {
-        const index = this.todos.findIndex(t => t.id === todo.id)
-        this.todos[index] = todo;
-      })
+      this.handleToggleCompletedTodo(todo)
     })
   }
 }

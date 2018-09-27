@@ -4,8 +4,8 @@
   <a href="#" (click)="handleDeleteAll()">Delete All</a>
   <ul>
     <app-todos-item *ngFor="let todo of todos" [todo]="todo" 
-      (deleteTodo)="handleDeleteTodo($event)" 
-      (restoreTodo)="handleRestoreTodo($event)"
+      (deleteTodo)="handleToggleCompletedTodo($event)" 
+      (restoreTodo)="handleToggleCompletedTodo($event)"
       (updateTodo)="handleUpdateTodo($event)"
     ></app-todos-item>
   </ul>
