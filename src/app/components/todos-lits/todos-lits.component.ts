@@ -42,12 +42,24 @@ export class TodosLitsComponent implements OnInit {
   }
 
   handleRestoreAll() {
-    this.todos.filter(todo => todo.completed).forEach(todo => todo.completed = false)
+    this.todos.filter(todo => todo.completed).forEach(todo => {
+      todo.completed = false
+      this.todoService.completeTodo(todo).subscribe(todo => {
+        const index = this.todos.findIndex(t => t.id === todo.id)
+        this.todos[index] = todo;
+      })
+    })
     this.activeTodoCount = this.todos.length
   }
 
   handleDeleteAll() {
-    this.todos.filter(todo => ! todo.completed).forEach(todo => todo.completed = true)
+    this.todos.filter(todo => ! todo.completed).forEach(todo => {
+      todo.completed = true
+      this.todoService.completeTodo(todo).subscribe(todo => {
+        const index = this.todos.findIndex(t => t.id === todo.id)
+        this.todos[index] = todo;
+      })
+    })
     this.activeTodoCount = 0
   }
 }
