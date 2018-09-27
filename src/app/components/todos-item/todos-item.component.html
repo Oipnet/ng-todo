@@ -1,5 +1,5 @@
-<li [ngClass]="{ deleted: todo.deleted }">
-  {{ todo.title }} 
-  <a href="#" (click)="handleDeleteTodo()" *ngIf="!todo.deleted">Delete</a>
-  <a href="#" (click)="handleDeleteTodo()" *ngIf="todo.deleted">Restore</a>
+<li [ngClass]="{ deleted: todo.completed }" (click)="handleDeleteTodo($event)">
+  <span>{{ todo.title }}</span>
+  <a href="#" (click)="handleDeleteTodo($event)" *ngIf="!todo.completed">Delete</a>
+  <a href="#" (click)="handleDeleteTodo($event)" *ngIf="todo.completed">Restore</a>
 </li>

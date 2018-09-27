@@ -10,31 +10,44 @@ import { TodoService } from '../../services/todo.service';
 export class TodosLitsComponent implements OnInit {
 
   todos: Array<Todo>
-
   activeTodoCount: number = 0
+  loader: boolean = true
 
-  constructor(todoService: TodoService) {
-    this.todos = todoService.getAll()
-   }
+  constructor(private todoService: TodoService) {
+  }
 
   ngOnInit() {
-    this.activeTodoCount = this.todos.filter(todo => ! todo.deleted).length
+    this.todoService.getAll().subscribe(todos => {
+      this.todos = todos
+      this.activeTodoCount = this.todos.filter(todo => ! todo.completed).length
+      this.loader = false
+    })
   }
 
-  handleDeleteTodo() {
-    this.activeTodoCount--
+  handleDeleteTodo(todo: Todo) {
+    todo.completed = !todo.completed
+    this.todoService.completeTodo(todo).subscribe(todo => {
+      const index = this.todos.findIndex(t => t.id === todo.id);
+      this.todos[index] = todo;
+      this.activeTodoCount--
+    })
   }
-  handleRestoreTodo() {
-    this.activeTodoCount++
+  handleRestoreTodo(todo: Todo) {
+    todo.completed = !todo.completed
+    this.todoService.completeTodo(todo).subscribe(todo => {
+      const index = this.todos.findIndex(t => t.id === todo.id)
+      this.todos[index] = todo;
+      this.activeTodoCount++
+    })
   }
 
   handleRestoreAll() {
-    this.todos.filter(todo => todo.deleted).forEach(todo => todo.deleted = false)
+    this.todos.filter(todo => todo.completed).forEach(todo => todo.completed = false)
     this.activeTodoCount = this.todos.length
   }
 
   handleDeleteAll() {
-    this.todos.filter(todo => ! todo.deleted).forEach(todo => todo.deleted = true)
+    this.todos.filter(todo => ! todo.completed).forEach(todo => todo.completed = true)
     this.activeTodoCount = 0
   }
 }

@@ -1,6 +1,11 @@
-<ul>
-  <app-todos-item *ngFor="let todo of todos" [todo]="todo" (deleteTodo)="handleDeleteTodo()" (restoreTodo)="handleRestoreTodo()"></app-todos-item>
-</ul>
-Nombre de taches : {{ activeTodoCount }}
-<a href="#" (click)="handleRestoreAll()">Restore All</a> - 
-<a href="#" (click)="handleDeleteAll()">Delete All</a>
+<div *ngIf="!loader">
+  Nombre de taches : {{ activeTodoCount }}
+  <a href="#" (click)="handleRestoreAll()">Restore All</a> - 
+  <a href="#" (click)="handleDeleteAll()">Delete All</a>
+  <ul>
+    <app-todos-item *ngFor="let todo of todos" [todo]="todo" (deleteTodo)="handleDeleteTodo($event)" (restoreTodo)="handleRestoreTodo($event)"></app-todos-item>
+  </ul>
+</div>
+<div *ngIf="loader">
+  Chargement
+</div>

@@ -16,9 +16,9 @@ export class TodosItemComponent implements OnInit {
   ngOnInit() {
   }
 
-  handleDeleteTodo() {
-    this.todo.deleted = !this.todo.deleted
-    if (this.todo.deleted) {
+  handleDeleteTodo(e) {
+    e.stopPropagation()
+    if (this.todo.completed) {
       this.deleteTodo.emit(this.todo)
     } else {
       this.restoreTodo.emit(this.todo)
